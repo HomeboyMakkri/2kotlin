@@ -39,7 +39,7 @@ fun GiphyApp() {
                 val gifUrl = GiphyApiService.fetchGifFromApi()
                 images = images + gifUrl
             } catch (e: Exception) {
-                errorMessage = "Failed to load GIF"
+                errorMessage = "Failed to load GIF. Please try again."
             }
             isLoading = false
         }
@@ -65,7 +65,20 @@ fun GiphyApp() {
         }
 
         errorMessage?.let {
-            Text(text = it, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(16.dp))
+            Row(
+                modifier = Modifier.padding(16.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = it,
+                    color = MaterialTheme.colorScheme.error
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Button(onClick = { fetchRandomGif() }) {
+                    Text("Try again")
+                }
+            }
         }
 
         LazyVerticalGrid(
@@ -100,19 +113,10 @@ fun GiphyApp() {
                             CircularProgressIndicator()
                         }
                         is AsyncImagePainter.State.Error -> {
-                            Row{
                                 Text(
                                     text = "Error loading image",
                                     color = MaterialTheme.colorScheme.error
                                 )
-                                Button(
-                                    onClick = { fetchRandomGif() },
-                                    modifier = Modifier.padding(16.dp)
-                                ) {
-                                    Text("Try again")
-                                }
-                            }
-
                         }
                         else -> {}
                     }
