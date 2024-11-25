@@ -6,7 +6,7 @@ import retrofit2.http.GET
 
 // API Interface
 interface GiphyApi {
-    @GET("random?api_key=lh4RYRGvcL5h2C84BMVJgA2zIZ7cHjpX&tag=&rating=g")
+    @GET("random?api_key=Koj7rrZfxPMmbim30u9gY4okmFmMmCqT&tag=&rating=g")
     suspend fun getRandomGif(): GifResponse
 }
 
@@ -22,7 +22,7 @@ object GiphyApiService {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val api: GiphyApi = retrofit.create(GiphyApi::class.java)
+    private val api: GiphyApi = retrofit.create(GiphyApi::class.java)
 
     suspend fun fetchGifFromApi(): String {
         try {
